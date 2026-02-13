@@ -1,0 +1,107 @@
+# ArtFlow Protocol Governance Charter v1.0 (DRAFT)
+
+**Status:** Pending legal review – input requested.  
+**Version:** 0.1.0  
+**Last Updated:** 2026-02-12  
+**Author:** Governing Body  
+
+---
+
+## 1. Purpose
+
+ArtFlow Protocol is an open‑source financial primitive that enables AI systems to securitize future revenue streams in exchange for upfront capital. This Charter establishes the governance structures, policies, and accountability mechanisms necessary to ensure the protocol operates fairly, transparently, and in compliance with evolving regulatory standards for AI‑driven credit underwriting.
+
+---
+
+## 2. Scope
+
+This Charter applies to:
+
+- The **verification contract** (`ArtFlowPerspective.sol`) and any successor attestation mechanisms.
+- All **verified ArtFlow deployments** listed in the on‑chain registry.
+- The **Governing Body** and any appointed committees or advisors.
+
+---
+
+## 3. Verification Layer
+
+`ArtFlowPerspective.sol` is the canonical attestation oracle for ArtFlow‑compliant contracts.  
+To receive verification, a contract must:
+
+1. Implement `RoyaltyAdvanceEscrow` with immutable `upfrontAmount` and `capAmount`.
+2. Reference an `ArtFlowNFT` contract that supports **ERC2981** royalty standard.
+3. Register itself via `setFactorContract()` on the NFT contract.
+4. Pass parameter sanity checks (`upfront > 0`, `cap > upfront`, royalty ≤ 10,000 bps).
+
+Verified contracts are added to the public on‑chain registry. Verification can be revoked if a contract is later found to be non‑compliant or fraudulent.
+
+---
+
+## 4. Algorithmic Oversight Committee
+
+An **Algorithmic Oversight Committee** is responsible for:
+
+- Annual fair lending testing (disparate impact analysis).
+- Maintenance of the model inventory (on‑chain registry).
+- Response to credible bias concerns or complaints.
+- Review of proposed changes to verification criteria.
+
+**Initial Composition (Interim):**
+
+| Role | Holder | Affiliation |
+|------|--------|-------------|
+| Chair | Governing Body | ArtFlow Protocol |
+| Legal Advisor | [Vacant – seeking counsel] | TBD |
+| Technical Advisor | [Vacant] | TBD |
+
+**The Committee shall meet quarterly and publish public summaries of its activities.**
+
+---
+
+## 5. Fair Lending Testing
+
+Annually, and upon any **trigger event** (material update to verification criteria, credible third‑party complaint, or new regulatory guidance), the Committee shall conduct a disparate impact analysis.
+
+**Methodology shall include:**
+
+- Collection of anonymized, voluntarily disclosed demographic data from artists and factors.
+- Regression analysis of approval rates and advance amounts by protected class (where data permits).
+- Public disclosure of results, methodology, and any remedial actions taken.
+
+*Detailed testing protocol is maintained in `/governance/testing_protocol.md`.*
+
+---
+
+## 6. Adverse Action
+
+Any factor denial — whether by smart contract rejection or off‑chain decision — **must** be accompanied by an explanation identifying the specific parameter(s) that caused the denial.
+
+ArtFlow will maintain an **Adverse Action API** that translates on‑chain rejection reasons into plain‑English statements.
+
+*Example:*  
+> *“Your expected annual sales volume (N=2) is below the minimum threshold of 3. This results in an estimated future royalty stream of 0.30 ETH/year, which does not meet the current risk tolerance for advance offers.”*
+
+---
+
+## 7. Amendment Process
+
+This Charter may be amended by the Governing Body following:
+
+1. Consultation with the Algorithmic Oversight Committee.
+2. A 14‑day public comment period (via GitHub Discussions).
+3. Publication of the amended Charter with a version increment.
+
+Material amendments shall be noted in the on‑chain registry as protocol‑level events.
+
+---
+
+## 8. Adoption
+
+This Charter is effective immediately upon publication.  
+All existing and future verified ArtFlow contracts are subject to its terms.
+
+**Next required action:** Legal review and formalization of Committee appointments.
+
+---
+
+*Document continues to evolve. Contributions and critiques welcome via GitHub.*
